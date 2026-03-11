@@ -1,0 +1,32 @@
+# ==========================
+# Java / Spring Boot
+# ==========================
+/backend/api/target/
+/backend/api/*.iml
+/backend/api/.idea/
+/backend/api/.mvn/wrapper/maven-wrapper.jar
+/backend/api/.classpath
+/backend/api/.project
+/backend/api/.settings/
+/backend/api/.springBeans
+
+# ==========================
+# Node / Frontend
+# ==========================
+/frontend/web/node_modules/
+/frontend/web/.next/
+/frontend/web/out/
+/frontend/web/dist/
+/frontend/web/build/
+/frontend/web/*.log
+/frontend/web/.env.local
+/frontend/web/.env.*.local
+
+# ==========================
+# IDE / OS files
+# ==========================
+.vscode/
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
