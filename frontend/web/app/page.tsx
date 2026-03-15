@@ -1,7 +1,9 @@
+import MapGrid from "./components/maps/MapGrid";
+
 export default function Home() {
   return (
-    <main className="p-8">
-      <h1 style={{ color: "#14FFEC" }}>Ana Sayfa</h1>
+    <main className="px-8 py-10">
+      <MapGrid />
     </main>
   );
 }
