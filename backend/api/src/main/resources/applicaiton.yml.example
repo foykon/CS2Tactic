@@ -2,9 +2,9 @@ spring:
   application:
     name: cs2tactic-api
   datasource:
-    url: jdbc:postgresql://127.0.0.1:5433/cs2tactic
-    username: cs2tactic_user
-    password: cs2tactic_pass
+    url: jdbc:postgresql://127.0.0.1:PORT/DB_NAME
+    username: DB_USER
+    password: DB_PASSWORD
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:

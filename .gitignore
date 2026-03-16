@@ -9,6 +9,8 @@
 /backend/api/.project
 /backend/api/.settings/
 /backend/api/.springBeans
+/backend/api/.env
+/backend/api/src/main/resources/application.yml
 
 # ==========================
 # Node / Frontend
