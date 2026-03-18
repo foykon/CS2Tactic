@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @MappedSuperclass
+//@SoftDelete(columnName = "is_deleted")
 public abstract class BaseEntity {
 
     @CreationTimestamp
