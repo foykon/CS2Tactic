@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.UUID;
 
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.cs2tactic.api.common.dto.DataResult;
@@ -28,52 +30,51 @@ public class MapServiceImpl implements MapService {
     private final MapMapper mapMapper;
 
     @Override
-    public DataResult<List<MapResponse>> getAll() {
-        return new SuccessDataResult<>(
-                mapRepository.findAll()
-                        .stream()
-                        .map(mapMapper::toResponse)
-                        .toList()
-        );
+    @Cacheable(value = "maps", key = "'all'")
+    public List<MapResponse> getAll() {
+        return mapRepository.findAll()
+                .stream()
+                .map(mapMapper::toResponse)
+                .toList();
     }
 
     @Override
-    public DataResult<MapResponse> getById(UUID id) {
-        return new SuccessDataResult<>(
-                mapRepository.findById(id)
-                        .map(mapMapper::toResponse)
-                        .orElseThrow(() -> new NoSuchElementException("Map not found: " + id))
-        );
+    @Cacheable(value = "maps", key = "'id:' + #id")
+    public MapResponse getById(UUID id) {
+        return mapRepository.findById(id)
+                    .map(mapMapper::toResponse)
+                    .orElseThrow(() -> new NoSuchElementException("Map not found: " + id));
     }
 
     @Override
-    public DataResult<MapResponse> getByMapKey(String mapKey) {
-        return new SuccessDataResult<>(
-                mapRepository.findByMapKeyAndIsDeletedFalse(mapKey)
+    @Cacheable(value = "maps", key = "'key:' + #mapKey")
+    public MapResponse getByMapKey(String mapKey) {
+        return mapRepository.findByMapKeyAndIsDeletedFalse(mapKey)
                         .map(mapMapper::toResponse)
-                        .orElseThrow(() -> new NoSuchElementException("Map not found: " + mapKey))
-        );
+                        .orElseThrow(() -> new NoSuchElementException("Map not found: " + mapKey));
     }
 
     @Override
-    public DataResult<MapResponse> create(CreateMapRequest request) {
+    @CacheEvict(value = "maps", allEntries = true)
+    public MapResponse create(CreateMapRequest request) {
         Map map = mapMapper.toEntity(request);
-        return new SuccessDataResult<>(mapMapper.toResponse(mapRepository.save(map)));
+        return mapMapper.toResponse(mapRepository.save(map));
     }
 
     @Override
-    public DataResult<MapResponse> update(UUID id, UpdateMapRequest request) {
+    @CacheEvict(value = "maps", allEntries = true)
+    public MapResponse update(UUID id, UpdateMapRequest request) {
         Map map = mapRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Map not found: " + id));
         mapMapper.updateEntity(request, map);
-        return new SuccessDataResult<>(mapMapper.toResponse(mapRepository.save(map)));
+        return mapMapper.toResponse(mapRepository.save(map));
     }
 
     @Override
-    public Result delete(UUID id) {
+    @CacheEvict(value = "maps", allEntries = true)
+    public void delete(UUID id) {
         Map map = mapRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Map not found: " + id));
         mapRepository.delete(map);
-        return new SuccessResult("Map deleted successfully");
     }
 }

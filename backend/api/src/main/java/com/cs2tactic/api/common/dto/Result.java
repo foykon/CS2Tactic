@@ -3,11 +3,12 @@ package com.cs2tactic.api.common.dto;
 import lombok.Getter;
 import lombok.ToString;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Getter
 @ToString
-public abstract class Result {
+public abstract class Result implements Serializable{
     private final boolean success;
     private final String message;
     private final LocalDateTime timestamp ;
@@ -18,4 +19,5 @@ public abstract class Result {
         this.timestamp = LocalDateTime.now();
         
     }
+
 }
