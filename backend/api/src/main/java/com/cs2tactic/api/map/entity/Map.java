@@ -1,5 +1,7 @@
 package com.cs2tactic.api.map.entity;
 
+import java.util.UUID;
+
 import com.cs2tactic.api.common.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
@@ -14,8 +16,12 @@ import lombok.*;
 public class Map extends BaseEntity {
 
     @Id
-    @Column(name = "id", nullable = false, unique = true)
-    private String id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "id", nullable = false, updatable = false)
+    private UUID id;
+
+    @Column(name = "map_key", nullable = false, unique = true)
+    private String mapKey;
 
     @Column(name = "name", nullable = false)
     private String name;
