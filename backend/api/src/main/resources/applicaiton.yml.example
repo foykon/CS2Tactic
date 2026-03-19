@@ -15,5 +15,9 @@ spring:
     redis:
       host: 127.0.0.1
       port: REDIS_PORT
+  server:
+    error:
+      include-stacktrace: never
+      include-message: never
 server:
   port: 8080
