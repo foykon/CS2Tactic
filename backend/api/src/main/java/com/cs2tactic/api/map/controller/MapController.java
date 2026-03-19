@@ -9,6 +9,7 @@ import com.cs2tactic.api.map.dto.MapResponse;
 import com.cs2tactic.api.map.dto.UpdateMapRequest;
 import com.cs2tactic.api.map.service.MapService;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,12 +41,12 @@ public class MapController {
     }
 
     @PostMapping
-    public ResponseEntity<DataResult<MapResponse>> create(@RequestBody CreateMapRequest request) {
+    public ResponseEntity<DataResult<MapResponse>> create(@RequestBody @Valid CreateMapRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(new SuccessDataResult<>(mapService.create(request), "Map created"));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<DataResult<MapResponse>> update(@PathVariable UUID id, @RequestBody UpdateMapRequest request) {
+    public ResponseEntity<DataResult<MapResponse>> update(@PathVariable UUID id, @RequestBody @Valid UpdateMapRequest request) {
         return ResponseEntity.ok(new SuccessDataResult<>(mapService.update(id, request), "Map updated"));
     }
 
